@@ -46,6 +46,8 @@ def HTTPRequestJsonRepr(self):
             content['encoding'] = self.encoding
         else:
             content['text'] = self.text.encode('utf8')  # must transcode to utf-8
+    # FIXME: should process postData further and replace text
+    # with params if URL encoded parameters
     return {
         'method': self.msg.method,
         'url': self.url,
@@ -55,7 +57,7 @@ def HTTPRequestJsonRepr(self):
         'headersSize': -1,
         'headers': header_json_repr(self.msg.headers),
         'bodySize': len(self.msg.body),
-        'content': content,
+        'postData': content,
     }
 http.Request.json_repr = HTTPRequestJsonRepr
 
